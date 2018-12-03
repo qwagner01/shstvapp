@@ -4,11 +4,13 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+//var jsonParser=bodyParser.json();
+var http = require('http').Server(app);
 
 var dbConfig = require('./db');
 var mongoose = require('mongoose');
 // Connect to DB
-mongoose.connect(dbConfig.url);
+mongoose.connect(dbConfig.url, {useNewUrlParser: true });
 
 var app = express();
 
@@ -21,9 +23,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.set(express.static(path.join(__dirname, 'public')));
 app.get('/login', function(req, res){
-  res.sendFile(__dirname + '/public/login.html');
+  res.sendFile(__dirname + '/routes/login.html');
   var test = req.idtoken;
   console.log(test);
 });
@@ -31,7 +33,8 @@ app.post('/two', jsonParser, function (req, res) {
 servarray=(req.body.data);
     console.log(servarray + " ");
 //recieve data here
-   });
+});
+
 // Configuring Passport
 var passport = require('passport');
 var expressSession = require('express-session');
@@ -71,3 +74,6 @@ if (app.get('env') === 'development') {
 }
 
 module.exports = app;
+http.listen(3000, function(){
+console.log('listening on *:3000');
+});
