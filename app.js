@@ -22,7 +22,16 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
+app.get('/login', function(req, res){
+  res.sendFile(__dirname + '/public/login.html');
+  var test = req.idtoken;
+  console.log(test);
+});
+app.post('/two', jsonParser, function (req, res) {
+servarray=(req.body.data);
+    console.log(servarray + " ");
+//recieve data here
+   });
 // Configuring Passport
 var passport = require('passport');
 var expressSession = require('express-session');
