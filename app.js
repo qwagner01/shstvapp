@@ -67,14 +67,12 @@ doc.useServiceAccountAuth(creds, function(err) {
     }
   })
   doc.getRows(5, function(err, rows) {
-    for (i = 0; i < rows.length; i++) {
-      info.push({
-        letter: rows[i].letter,
-        specialSchedule: rows[i].special,
-        image: rows[i].image,
-        video: rows[i].video
-      })
-    }
+    info.push({
+      letter: rows[0].letter,
+      special: rows[0].specialschedule,
+      image: rows[0].image,
+      video: rows[0].video
+    })
   })
   doc.getRows(6, function(err, rows) {
     for (i = 0; i < rows.length; i++) {
@@ -116,12 +114,10 @@ app.get('/', function (req, res) {
   else if (info[0].letter==="D") { 
     schedule = D
   }
-  else if (info[0].specialSchedule==="yes" || "Yes") { 
+  else if (info[0].special==="yes" || "Yes") { 
     schedule = special
   }
-  //res.send(currentSchedule);
-  console.log(schedule[0]);
-  res.render('index', { title: 'SHSTVApp', schedule:schedule, info: info});
+  res.render('index', { title: 'SHSTVApp', schedule:schedule, info:info});
 });
 
 // catch 404 and forward to error handler
