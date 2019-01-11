@@ -39,8 +39,8 @@ html(lang='en')
         section#block-documentation
           .page-header
           .row.justify-content-md-center
-            iframe(type='text/html' width='640' height='390' src=info[0].video frameborder='0')
-            -iframe.embed-responsive-item(src=info[0].video, allowfullscreen='')
+            iframe.embed-responsive-item(type='text/html' width='640' height='390' src=info[0].video frameborder='0',allowfullscreen)
+            -//iframe.embed-responsive-item(src=info[0].video, allowfullscreen='')
       br
 
     .jumbotron.text-center(style='margin-bottom:0', content='width=device-width, initial-scale=1.0')
