@@ -33,15 +33,15 @@ html(lang='en')
             th(scope='row') #{schedule[i].period}
             td #{schedule[i].start}
             td #{schedule[i].end}
-      br
+
       .col-sm-12
         span.icon-info-sign
         section#block-documentation
           .page-header
           .row.justify-content-md-center
-            iframe(type='text/html' width='640' height='390' src=info[0].video frameborder='0')
+            iframe.embed-responsive-item(type='text/html' width='640' height='390' src=info[0].video frameborder='0',allowfullscreen='')
             -//iframe.embed-responsive-item(src=info[0].video, allowfullscreen='')
-      br
+      br br
     .jumbotron.text-center(style='margin-bottom:0', content='width=device-width, initial-scale=1.0')
       .scroll-left(width='screen-width')
         p Important News and Announcements
