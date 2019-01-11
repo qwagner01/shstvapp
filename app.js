@@ -7,7 +7,12 @@ var logger = require('morgan');
 const GoogleSpreadsheet = require('google-spreadsheet');
 const creds = require('./client_secret.json');
 var doc = new GoogleSpreadsheet('1bnsajR4ySnuXZLLRkoVroenfnf6ULfa-6_9H2t0yD0Q');
-var schedule = []
+var A = []
+var B = []
+var C = []
+var D = []
+var info = []
+var special = []
 
 doc.useServiceAccountAuth(creds, function(err) {
   if (err) {
@@ -15,14 +20,73 @@ doc.useServiceAccountAuth(creds, function(err) {
   }
   doc.getRows(1, function(err, rows) {
     for (i = 0; i < rows.length; i++) {
-      schedule.push({
+      A.push({
         period: rows[i].period,
         start: rows[i].start,
         end: rows[i].end,
-        lunch: rows[i].lunch
+        lunch: rows[i].lunch,
+        num: rows[i].numofclassesandwaves,
+        letter: "A"
       })
     }
-    // console.log(schedule);
+  })
+  doc.getRows(2, function(err, rows) {
+    for (i = 0; i < rows.length; i++) {
+      B.push({
+        period: rows[i].period,
+        start: rows[i].start,
+        end: rows[i].end,
+        lunch: rows[i].lunch,
+        num: rows[0].numofclassesandwaves,
+        letter: "B"
+      })
+    }
+  })
+  doc.getRows(3, function(err, rows) {
+    for (i = 0; i < rows.length; i++) {
+      C.push({
+        period: rows[i].period,
+        start: rows[i].start,
+        end: rows[i].end,
+        lunch: rows[i].lunch,
+        num: rows[0].numofclassesandwaves,
+        letter: "C"
+      })
+    }
+  })
+  doc.getRows(4, function(err, rows) {
+    for (i = 0; i < rows.length; i++) {
+      D.push({
+        period: rows[i].period,
+        start: rows[i].start,
+        end: rows[i].end,
+        lunch: rows[i].lunch,
+        num: rows[0].numofclassesandwaves,
+        letter: "D"
+      })
+    }
+  })
+  doc.getRows(5, function(err, rows) {
+    for (i = 0; i < rows.length; i++) {
+      info.push({
+        letter: rows[i].letter,
+        specialSchedule: rows[i].special,
+        image: rows[i].image,
+        video: rows[i].video
+      })
+    }
+  })
+  doc.getRows(6, function(err, rows) {
+    for (i = 0; i < rows.length; i++) {
+      special.push({
+        period: rows[i].period,
+        start: rows[i].start,
+        end: rows[i].end,
+        lunch: rows[i].lunch,
+        num: rows[i].numofclassesandwaves,
+        letter: "special schedule"
+      })
+    }
   })
 });
 
@@ -32,7 +96,6 @@ var app = express();
 app.locals.basedir = path.join(__dirname, 'views');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
-
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -40,51 +103,26 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', function (req, res) {
-  res.render('index', { title: 'SHSTVApp', schedule: schedule });
-})
-
-app.get('/schedule', function(req, res) {
-  const example = {
-    "A": [
-        { period: '1',
-          start: '07:30 A.M.',
-          end: '08:20 A.M.',
-          lunch: '0' },
-        { period: '2',
-          start: '08:25 A.M.',
-          end: '09:45 A.M.',
-          lunch: '0' },
-        { period: '3',
-          start: '09:50 A.M.',
-          end: '10:40 A.M.',
-          lunch: '0' },
-        { period: '5',
-          start: '10:45 A.M.',
-          end: '11:15 A.M.',
-          lunch: '1' },
-        { period: '5',
-          start: '11:20 A.M.',
-          end: '11:50 A.M.',
-          lunch: '2' },
-        { period: '5',
-          start: '11:55 A.M.',
-          end: '12:25 P.M.',
-          lunch: '3' },
-        { period: '8',
-          start: '12:30 P.M.',
-          end: '01:20 P.M.',
-          lunch: '0' },
-        { period: '7',
-          start: '01:25 P.M.',
-          end: '02:15 P.M.',
-          lunch: '0' }
-    ],
-    "B": [
-
-    ]
+  //res.send(info[0].letter);
+  if (info[0].letter==="A") { 
+    schedule = A
   }
-  res.send(example)
-})
+  else if (info[0].letter==="B") { 
+    schedule = B
+  }
+  else if (info[0].letter==="C") { 
+    schedule = C
+  }
+  else if (info[0].letter==="D") { 
+    schedule = D
+  }
+  else if (info[0].specialSchedule==="yes" || "Yes") { 
+    schedule = special
+  }
+  //res.send(currentSchedule);
+  console.log(schedule[0]);
+  res.render('index', { title: 'SHSTVApp', schedule:schedule, info: info});
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
