@@ -14,9 +14,9 @@ html(lang='en')
     header#overview.bs-header
       .jumbotron.text-center(style='margin-bottom:0')
         - if (schedule[0].letter=="A" && info[0].specialSchedule == 'No' || 'no') { var article = "an"} else { var article = "a" }
-        - if (info[0].specialSchedule == 'Yes' || 'yes') 
+        - if (info[0].specialSchedule == 'Yes' || 'yes')
             h1 It is a special schedule.
-        - if else (info[0].specialSchedule == 'No' || 'no') 
+        - if else (info[0].specialSchedule == 'No' || 'no')
             h1 It is #{article} #{schedule[0].letter} day.
     #layout.container(style='margin-top:30px')
 
@@ -41,7 +41,7 @@ html(lang='en')
           .row.justify-content-md-center
             iframe(type='text/html' width='640' height='390' src=info[0].video frameborder='0')
             -//iframe.embed-responsive-item(src=info[0].video, allowfullscreen='')
-      br
+      br br
     .jumbotron.text-center(style='margin-bottom:0', content='width=device-width, initial-scale=1.0')
       .scroll-left(width='screen-width')
         p Important News and Announcements
