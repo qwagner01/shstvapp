@@ -1,2 +1,5 @@
 var now = new Date();
-console.log(now.year);
+
+
+
+console.log(now);

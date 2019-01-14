@@ -14,14 +14,19 @@ html(lang='en')
   body
     header#overview.bs-header
       .jumbotron.text-center(style='margin-bottom:0')
-        - if (schedule[0].letter=="A" && info[0].specialSchedule == 'No' || 'no') { var article = "an"} else { var article = "a" }
-        - if (info[0].specialSchedule == 'Yes' || 'yes')
-            h1 It is a special schedule.
-        - if else (info[0].specialSchedule == 'No' || 'no')
+        - if (schedule[0].letter=="A") { var article = "an"} else { var article = "a" }
             h1 It is #{article} #{schedule[0].letter} day.
+        -/*
+            special schedule stuff:
+            && info[0].special == 'No' || 'no'
+            - if (info[0].special == 'Yes' || 'yes')
+            h1 It is a special schedule.
+            - if else (info[0].special == 'No' || 'no')
+        -*/
     #layout.container(style='margin-top:30px')
 
-    #layout.container-px-lg-5
+    #layout.container 
+    -//px-lg-5
       table.table.table-bordered
         thead
           tr
@@ -40,15 +45,10 @@ html(lang='en')
         section#block-documentation
           .page-header
           .row.justify-content-md-center
-<<<<<<< HEAD
-            iframe.embed-responsive-item(type='text/html' width='640' height='390' src=info[0].video frameborder='0')
+            .youtube-container
+              iframe.youtube(allowfullscreen, src="https://youtube.com/embed/"+info[0].video+"?autoplay=1&rel=0", style="width:"+600+";height:"+300+";")
       br
 
-=======
-            iframe.embed-responsive-item(type='text/html' width='640' height='390' src=info[0].video frameborder='0',allowfullscreen='')
-            -//iframe.embed-responsive-item(src=info[0].video, allowfullscreen='')
-      br br
->>>>>>> bb2ef4b7524bd848df0cbf0dfebc069d4e892f41
     .jumbotron.text-center(style='margin-bottom:0', content='width=device-width, initial-scale=1.0')
       .scroll-left(width='screen-width')
         p Important News and Announcements
@@ -61,3 +61,4 @@ html(lang='en')
     script(src='/assets/js/google-code-prettify/prettify.js', type='text/javascript')
     script(src='/assets/js/docs.js', type='text/javascript')
     script(src='/assets/js/demo.js', type='text/javascript')
+
