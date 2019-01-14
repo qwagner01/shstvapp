@@ -67,12 +67,14 @@ doc.useServiceAccountAuth(creds, function(err) {
     }
   })
   doc.getRows(5, function(err, rows) {
-    info.push({
-      letter: rows[0].letter,
-      special: rows[0].specialschedule,
-      image: rows[0].image,
-      video: rows[0].video
-    })
+    for (i = 0; i < rows.length; i++) {
+      info.push({
+        letter: rows[0].letter,
+        special: rows[0].specialschedule,
+        image: rows[i].image,
+        video: rows[0].video
+      })
+    }
   })
   doc.getRows(6, function(err, rows) {
     for (i = 0; i < rows.length; i++) {
