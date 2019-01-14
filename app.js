@@ -89,6 +89,7 @@ doc.useServiceAccountAuth(creds, function(err) {
 });
 
 var app = express();
+var request = require('request')
 
 // view engine setup
 app.locals.basedir = path.join(__dirname, 'views');
@@ -119,6 +120,12 @@ app.get('/', function (req, res) {
   }
   res.render('index', { title: 'SHSTVApp', schedule:schedule, info:info});
 });
+
+app.get('/articles', function(req,res) {
+  content = request.get("https://inkscraper.herokuapp.com", function(err, response, body) {
+    res.send(body);
+  })
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
